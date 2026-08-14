@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ book.title }}</title>
+    <style>
+        body { font-family: sans-serif; max-width: 700px; margin: 40px auto; }
+        .tag { background: #eee; border-radius: 4px; padding: 2px 8px; margin-right: 4px; font-size: 0.85em; }
+        .log { border-top: 1px solid #eee; padding: 10px 0; }
+        a { color: #333; }
+    </style>
+</head>
+<body>
+    <p><a href="{% url 'book_list' %}">&larr; Back to all books</a></p>
+
+    <h1>{{ book.title }}</h1>
+    <p>by {{ book.author.name }}</p>
+    <p>{{ book.about_book }}</p>
+    <p>{{ book.book_length }} pages</p>
+
+    <div>
+        {% for tag in book.tags.all %}
+            <span class="tag">{{ tag.name }}</span>
+        {% endfor %}
+    </div>
+
+    <h2>Reading Log</h2>
+    {% for log in book.reading_logs.all %}
+        <div class="log">
+            {{ log.date }} — {{ log.pages_read }} pages read — {{ log.get_status_display }}
+            {% if log.rating %} — Rating: {{ log.rating }}/5{% endif %}
+            {% if log.notes %}<p><em>{{ log.notes }}</em></p>{% endif %}
+        </div>
+    {% empty %}
+        <p>No reading log entries yet.</p>
+    {% endfor %}
+</body>
+</html>
