@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}The Reading Room{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'tracker/style.css' %}">
+</head>
+<body>
+    <div class="wrap">
+        <header class="site">
+            <div class="brand">The Reading Room</div>
+            <a class="add-link" href="{% url 'book_create' %}">+ Add book</a>
+        </header>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
