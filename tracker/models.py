@@ -14,7 +14,7 @@ class Author(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=100)
     author = models.ForeignKey('Author', on_delete=models.CASCADE, related_name='books')
-    tags = models.ManyToManyField('Tag', related_name='books')
+    tags = models.ManyToManyField('Tag', related_name='books', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     about_book = models.TextField()
     book_length = models.IntegerField()

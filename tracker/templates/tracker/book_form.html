@@ -1,0 +1,13 @@
+{% extends 'tracker/base.html' %}
+
+{% block title %}Add a Book — The Reading Room{% endblock %}
+
+{% block content %}
+    <a class="back" href="{% url 'book_list' %}">&larr; back to shelf</a>
+    <h1 style="font-family: 'Fraunces', serif; font-weight: 700;">Add a Book</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save to shelf</button>
+    </form>
+{% endblock %}
