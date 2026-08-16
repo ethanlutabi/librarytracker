@@ -11,6 +11,7 @@
 </head>
 <body>
     <h1>My Books</h1>
+    <p><a href="{% url 'book_create' %}">+ Add a new book</a></p>
     {% for book in books %}
         <div class="book">
             <strong><a href="{% url 'book_detail' book.id %}">{{ book.title }}</a></strong> by {{ book.author.name }}
