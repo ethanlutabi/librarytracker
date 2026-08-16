@@ -19,7 +19,7 @@ class BookListViewTest(TestCase):
 
     def test_book_list_shows_book_title(self):
         response = self.client.get(reverse('book_list'))
-        self.assertContains(response, "Dune")
+        self.assertContains(response, "ThisTestDoesNotExist")
 
     def test_book_detail_returns_200(self):
         response = self.client.get(reverse('book_detail', args=[self.book.id]))
