@@ -35,8 +35,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run Django checks
-        run: python manage.py check
+      - name: Run tests
+        run: python manage.py test
         env:
           DB_NAME: testdb
           DB_USER: testuser
