@@ -2,6 +2,9 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.db.models import Avg
 from .models import Book
 from .forms import BookForm
+from rest_framework import viewsets
+from .models import Book, Author, Tag
+from .serializers import BookSerializer, AuthorSerializer, TagSerializer
 
 
 # Create your views here.
@@ -51,3 +54,18 @@ def book_delete(request, book_id):
         book.delete()
         return redirect('book_list')
     return render(request, 'tracker/book_confirm_delete.html', {'book': book})
+
+
+
+
+class AuthorViewSet(viewsets.ModelViewSet):
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
+
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+
+class BookViewSet(viewsets.ModelViewSet):
+    queryset = Book.objects.all().select_related('author').prefetch_related('tags')
+    serializer_class = BookSerializer
