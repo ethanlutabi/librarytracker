@@ -14,6 +14,7 @@ from pathlib import Path
 from decouple import config
 import os
 import sys
+import dj_database_url
 
 
 
@@ -88,8 +89,17 @@ DATABASES = {
         'PASSWORD': config('DB_PASSWORD'),
         'HOST': config('DB_HOST'),
         'PORT': config('DB_PORT'),
+        'OPTIONS': {
+            'sslmode': 'require', 
+        },
     }
 }
+
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=config('DATABASE_URL')  # Matches your .env variable holding the Render URL
+#     )
+# }
 
 
 # Password validation
