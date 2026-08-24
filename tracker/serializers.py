@@ -13,9 +13,11 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 class BookSerializer(serializers.ModelSerializer):
-    author = AuthorSerializer(read_only = True)
-    tags = TagSerializer(many=True, read_only=True)
+    author = serializers.PrimaryKeyRelatedField(queryset=Author.objects.all())
+    author_detail = AuthorSerializer(source='author', read_only=True)
+    tags = serializers.PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all(), required=False)
+    tags_detail = TagSerializer(source='tags', many=True, read_only=True)
 
     class Meta:
         model = Book
-        fields = ['id', 'title', 'author', 'about_book', 'book_length', 'tags', 'created_at']
+        fields = ['id', 'title', 'author', 'author_detail', 'about_book', 'book_length', 'tags', 'tags_detail', 'created_at']

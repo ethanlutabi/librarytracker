@@ -1,10 +1,15 @@
 from django.test import TestCase
 from django.urls import reverse
+from unittest.mock import patch
 from .models import Author, Book
 
 
 class BookListViewTest(TestCase):
     def setUp(self):
+        patcher = patch('tracker.signals.requests.post')
+        self.mock_post = patcher.start()
+        self.addCleanup(patcher.stop)
+
         self.author = Author.objects.create(name="Frank Herbert", bio="Sci-fi author")
         self.book = Book.objects.create(
             title="Dune",
@@ -28,6 +33,10 @@ class BookListViewTest(TestCase):
 
 class BookEditDeleteTest(TestCase):
     def setUp(self):
+        patcher = patch('tracker.signals.requests.post')
+        self.mock_post = patcher.start()
+        self.addCleanup(patcher.stop)
+
         self.author = Author.objects.create(name="Frank Herbert", bio="Sci-fi author")
         self.book = Book.objects.create(
             title="Dune",

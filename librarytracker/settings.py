@@ -14,8 +14,7 @@ from pathlib import Path
 from decouple import config
 import os
 import sys
-
-
+import rest_framework
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -45,7 +44,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tracker',
+    'rest_framework_simplejwt',
+    'rest_framework.authtoken',
+    'drf_spectacular',
     'rest_framework',
+    
+
 ]
 
 MIDDLEWARE = [
@@ -134,6 +138,8 @@ USE_I18N = True
 USE_TZ = True
 
 
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
@@ -148,3 +154,37 @@ if 'test' in sys.argv:
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'memory',
     }
+
+
+
+# Rest Framework authenication settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',  # keep for browsable API login
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+    'DEFAULT_THROTTLE_CLASSES':[
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES':{
+        'anon':'100/day',
+        'user': '1000/day',
+        # 'anon': '3/minute',
+        # 'user': '5/minute',
+    },
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'The Reading Room API',
+    'DESCRIPTION': 'API for tracking books, authors, tags, and reading logs.',
+    'VERSION': '1.0.0',
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@readingroom.local'
