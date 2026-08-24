@@ -1,5 +1,7 @@
-.env
+*.env*
 staticfiles
 venv/
 __pycache__/
 *.pyc
+*.dump
+
